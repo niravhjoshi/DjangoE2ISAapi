@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 import json
 from django.utils.encoding import python_2_unicode_compatible
+from django.core.serializers.json import DjangoJSONEncoder
 # Create your models here.
 
 '''
@@ -22,8 +23,15 @@ class NonePerson(models.Manager):
 '''
 class PersonQuerySet(models.QuerySet):
     def serialize(self):
-        qs = self
-        return serialize("json",qs,fields=('id','Pid','PersonName','Person_sex','Person_BDate'))
+        list_values=list(self.values('id','Pid','PersonName','Person_sex','Person_BDate'))
+        print list_values
+        return json.dumps(list_values,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
+        #qs = self
+        #final_array=[]
+        #for obj in qs:
+        #    stuct = json.loads(obj.serialize())
+        #    final_array.append(stuct)
+        #return json.dumps(final_array)
 
 class PersonManager(models.Manager):
         def get_queryset(self):
@@ -45,10 +53,13 @@ class Person(models.Model):
         return str(self.PersonName)+str(self.Pid)+str(self.SEX)+str(self.Person_BDate)+str(self.id_id) or ""
 
     def serialize(self):
-        json_data= serialize('json',[self],fields=('id','Pid','PersonName','Person_sex','Person_BDate'))
-        print type(json_data)
-        print json_data
-        stuct = json.loads(json_data)
-        print type(stuct)
-        print stuct
+        data={
+            'id':self.id_id,
+            'Pid':self.Pid,
+            'PersonName':self.PersonName,
+            'Person_sex':self.Person_sex,
+            'Person_Bdate':self.Person_BDate
+        }
+        data = json.dumps(data,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
+        return data
 
