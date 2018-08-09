@@ -2,14 +2,14 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.core.serializers import serialize
 from django.http import JsonResponse,HttpResponse
 from .models import Person
 import json
 from django.views.generic import View
 from DjangoE2ISAapi.mixins import JsonResponseMixin
+from django.core.serializers import serialize
 # Create your views here.
-
+'''
 def person_detail_view(request):
     data = {
         "Name":"Nirav Joshi",
@@ -33,30 +33,23 @@ class JsonCBV2(JsonResponseMixin,View):
             "content":"Something new data"
         }
         return self.render_to_json_response(data)
-
+'''
 class PersonSerializeListView(View):
     def get(self,request,*args,**kwargs):
-        PerObj = Person.objects.filter(id_id =1).all()
-        PersonListViewData = serialize("json",PerObj)
-        #print PersonListViewData
-        ''' 
-        personlistdata ={
-            'PersonID':PerObj.Pid,
-            'PersonName':PerObj.PersonName,
-            'Person_Sex':PerObj.Person_sex,
-            'Person_Bdate':PerObj.Person_BDate,
-            'UserName':PerObj.user.username
-        }
-        '''
-        json_data = PersonListViewData
+        qs = Person.objects.all()
+        json_data = Person.objects.all().serialize()
+        #PersonListViewData = serialize("json",PerObj)
+        #json_data = PersonListViewData
         return HttpResponse(json_data,content_type='application/json')
 
 class PersonSerializDetailView(View):
     def get(self,request,*args,**kwargs):
         pid = self.kwargs['puser_id']
-        PerobjDetail = Person.objects.filter(Pid=pid,id_id=1).all()
-        print PerobjDetail
-        data=serialize("json",PerobjDetail)
-        json_data=data
+        obj = Person.objects.get(Pid=pid,id_id=1)
+        print obj
+        json_data=obj.serialize()
+        #data=serialize("json",PerobjDetail)
+        #json_data=data
+        print json_data
         return HttpResponse(json_data, content_type='application/json')
 
