@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'Earnings',
     'Expenses',
     'Shares',
-    'Investment'
+    'Investment',
+    'rest_framework',
 
 ]
 

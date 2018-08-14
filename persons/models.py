@@ -20,18 +20,24 @@ class FemalePerson(models.Manager):
 class NonePerson(models.Manager):
     def get_queryset(self):
         return super(NonePerson, self).get_queryset().filter(sex='N')
+
+class IdandPidFilter(models.Manger,id,pid):
+    def get_IdandPid(self):
+        return super(IdandPidFilter,self).get_queryset().filter(id=id,Pid=pid)
+
+class PersonNameSearch(models.Manager,name):
+    def get_searchbyName(self):
+        return super(PersonNameSearch,self).get_queryset().filter(PersonName = Name)
+
+Class PersonGetBdata(models.Manager,date):
+    def get_searchbyBDate(self):
+        return super(PersonGetBdata,self).get_queryset().filter(Person_BDate=date)
 '''
 class PersonQuerySet(models.QuerySet):
     def serialize(self):
         list_values=list(self.values('id','Pid','PersonName','Person_sex','Person_BDate'))
         print list_values
         return json.dumps(list_values,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
-        #qs = self
-        #final_array=[]
-        #for obj in qs:
-        #    stuct = json.loads(obj.serialize())
-        #    final_array.append(stuct)
-        #return json.dumps(final_array)
 
 class PersonManager(models.Manager):
         def get_queryset(self):
@@ -54,11 +60,11 @@ class Person(models.Model):
 
     def serialize(self):
         data={
-            'id':self.id_id,
-            'Pid':self.Pid,
-            'PersonName':self.PersonName,
-            'Person_sex':self.Person_sex,
-            'Person_Bdate':self.Person_BDate
+            'id': self.id_id,
+            'Pid': self.Pid,
+            'PersonName': self.PersonName,
+            'Person_sex': self.Person_sex,
+            'Person_Bdate': self.Person_BDate
         }
         data = json.dumps(data,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
         return data

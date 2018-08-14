@@ -13,11 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import url, include
 from persons.views import PersonSerializDetailView,PersonSerializeListView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/persons/',include('persons.api.urls')),
 #    url(r'^person/$', person_detail_view,),
 #    url(r'^person/cbv/$', JsonCBV.as_view(),),
     url(r'^person/PersonSerializDetailView/(?P<puser_id>\d+)/$', PersonSerializDetailView.as_view(),),
