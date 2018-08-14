@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics,mixins
 from .serializers import PersonSerializer
 from persons.models import Person
 
@@ -15,7 +15,13 @@ class PersonListSearchAPIView(APIView):
         serializer = PersonSerializer(qs,many=True)
         return Response(serializer.data)
 
-class PersonAPIView(generics.ListAPIView):
+#CreateModelMixin for Handling POST data and List View Data
+#mixin.CreateModelMixin --> POST Method
+#mixin.UpdateModelMixin --> PUT Method
+#mixin.DestroyModelMixin --> DELETE Method
+
+#Create and List View Mixin
+class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
     permission_classes = []
     authentication_classes = []
     #queryset = Person.objects.all()
@@ -28,18 +34,45 @@ class PersonAPIView(generics.ListAPIView):
             qs = qs.filter(PersonName__icontains=query)
         return qs
 
-class PersonCreateAPIView(generics.CreateAPIView):
-    permission_classes =        []
-    authentication_classes =    []
-    queryset =                  Person.objects.all()
-    serializer_class =          PersonSerializer
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
 
-class PersonDetailAPIView(generics.RetrieveAPIView):
+    # def perform_create(self, serializer):
+    #     serializer.save(user = self.request.user)
+
+#We dont need this Create API view method as this already covered in the mixin
+# class PersonCreateAPIView(generics.CreateAPIView):
+#     permission_classes =        []
+#     authentication_classes =    []
+#     queryset =                  Person.objects.all()
+#     serializer_class =          PersonSerializer
+
+#There is simple way to define this method
+class PersonDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes =        []
     authentication_classes =    []
     queryset =                  Person.objects.all()
     serializer_class =          PersonSerializer
     lookup_field =              'Pid'
+
+
+#THis will be UpdateMix and Retrive View Mixin
+# class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.RetrieveAPIView):
+#     permission_classes =        []
+#     authentication_classes =    []
+#     queryset =                  Person.objects.all()
+#     serializer_class =          PersonSerializer
+#     lookup_field =              'Pid'
+#
+#     def put(self,request,*args,**kwargs):
+#         return self.update(request,*args,**kwargs)
+#
+#     def patch(self,request,*args,**kwargs):
+#         return self.update(request,*args,**kwargs)
+#
+#     def delete(self,request,*args,**kwargs):
+#         return self.destroy(request,*args,**kwargs)
+
     #
     # def get_object(self,*args,**kwargs):
     #     kwargs = self.kwargs
@@ -47,18 +80,18 @@ class PersonDetailAPIView(generics.RetrieveAPIView):
     #     print kw_Pid
     #     return Person.objects.get(Pid=kw_Pid)
 
-class PersonUpdateAPIView(generics.UpdateAPIView):
-    permission_classes =        []
-    authentication_classes =    []
-    queryset =                  Person.objects.all()
-    serializer_class =          PersonSerializer
-    lookup_field = 'Pid'
-
-
-class PersonDeleteAPIView(generics.DestroyAPIView):
-    permission_classes =        []
-    authentication_classes =    []
-    queryset =                  Person.objects.all()
-    serializer_class =          PersonSerializer
-    lookup_field = 'Pid'
-
+# class PersonUpdateAPIView(generics.UpdateAPIView):
+#     permission_classes =        []
+#     authentication_classes =    []
+#     queryset =                  Person.objects.all()
+#     serializer_class =          PersonSerializer
+#     lookup_field = 'Pid'
+#
+#
+# class PersonDeleteAPIView(generics.DestroyAPIView):
+#     permission_classes =        []
+#     authentication_classes =    []
+#     queryset =                  Person.objects.all()
+#     serializer_class =          PersonSerializer
+#     lookup_field = 'Pid'
+#

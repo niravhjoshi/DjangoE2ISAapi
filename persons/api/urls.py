@@ -2,18 +2,20 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from .views import PersonListSearchAPIView,\
                 PersonAPIView,\
-                PersonCreateAPIView,\
-                PersonDetailAPIView,\
-                PersonUpdateAPIView,\
-                PersonDeleteAPIView
+                PersonDetailAPIView
+                #PersonCreateAPIView,\
+                #PersonDetailAPIView,\
+                #PersonUpdateAPIView,\
+                #PersonDeleteAPIView
 
 urlpatterns = [
     #url(r'^$',PersonListSearchAPIView.as_view()),
     url(r'^$',PersonAPIView.as_view()),
-    url(r'^create/$',PersonCreateAPIView.as_view()),
     url(r'^(?P<Pid>\d+)/$',PersonDetailAPIView.as_view()),
-    url(r'^(?P<Pid>\d+)/update/$',PersonUpdateAPIView.as_view()),
-    url(r'^(?P<Pid>\d+)/delete/$',PersonDeleteAPIView.as_view()),
+    #url(r'^create/$',PersonCreateAPIView.as_view()),
+    #url(r'^(?P<Pid>\d+)/$',PersonDetailAPIView.as_view()),
+    #url(r'^(?P<Pid>\d+)/update/$',PersonUpdateAPIView.as_view()),
+    #url(r'^(?P<Pid>\d+)/delete/$',PersonDeleteAPIView.as_view()),
 ]
 #Start with
 # /api/persons/ --> List view
