@@ -20,9 +20,13 @@ from persons.views import PersonSerializDetailView,PersonSerializeListView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/persons/',include('persons.api.urls')),
+    url(r'^api/eartypes/',include('earningtype.api.urls')),
+    url(r'^api/exptypes/',include('expensetype.api.urls')),
+    url(r'^api/invtypes/',include('investmtype.api.urls')),
+
 #    url(r'^person/$', person_detail_view,),
 #    url(r'^person/cbv/$', JsonCBV.as_view(),),
-    url(r'^person/PersonSerializDetailView/(?P<puser_id>\d+)/$', PersonSerializDetailView.as_view(),),
-    url(r'^person/PersonSerializListView/$', PersonSerializeListView.as_view(),),
+    #url(r'^person/PersonSerializDetailView/(?P<puser_id>\d+)/$', PersonSerializDetailView.as_view(),),
+    #url(r'^person/PersonSerializListView/$', PersonSerializeListView.as_view(),),
 #    url(r'^person/cbv2/$', JsonCBV2.as_view(),),
 ]

@@ -24,7 +24,7 @@ class PersonForm(forms.ModelForm):
         personsex = data.get('Person_sex',None)
         if personsex == "":
             personsex = None
-        personbdate = data.get('Person_BDate',Non)
+        personbdate = data.get('Person_BDate',None)
         if personbdate =="":
             personbdate = None
 
