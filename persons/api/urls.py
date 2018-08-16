@@ -1,12 +1,6 @@
 from django.contrib import admin
 from django.conf.urls import url, include
-from .views import PersonListSearchAPIView,\
-                PersonAPIView,\
-                PersonDetailAPIView
-                #PersonCreateAPIView,\
-                #PersonDetailAPIView,\
-                #PersonUpdateAPIView,\
-                #PersonDeleteAPIView
+from .views import  PersonAPIView,PersonDetailAPIView
 
 urlpatterns = [
     #url(r'^$',PersonListSearchAPIView.as_view()),

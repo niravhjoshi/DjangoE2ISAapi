@@ -16,6 +16,7 @@ class PersonSerializer(serializers.ModelSerializer):
             'id',
             'Pid',
             'PersonName',
+            'Person_Image',
             'Person_sex',
             'Person_BDate',
             'Person_CDate'
@@ -34,3 +35,5 @@ class PersonSerializer(serializers.ModelSerializer):
         if datetime.datetime.strptime(value, '%Y-%m-%d'):
             raise serializers.ValidationError("Incorrect data format, should be YYYY-MM-DD")
         return value
+    def validate_personimg(self,value):
+        pass

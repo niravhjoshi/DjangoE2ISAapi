@@ -3,33 +3,36 @@ from rest_framework.response import Response
 from rest_framework import generics,mixins
 from .serializers import PersonSerializer
 from persons.models import Person
+from django.views.generic import View
 
-#from django.views.generic import View
+class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.RetrieveAPIView):
+    permission_classes      = []
+    authentication_classes  = []
+    queryset                = Person.objects.all()
+    serializer_class        = PersonSerializer
+    lookup_field            = 'Pid'
 
-class PersonListSearchAPIView(APIView):
-    permission_classes = []
-    authentication_classes = []
+    def put(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
 
-    def get(self,request,format=None):
-        qs = Person.objects.all()
-        serializer = PersonSerializer(qs,many=True)
-        return Response(serializer.data)
+    def patch(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
 
-#CreateModelMixin for Handling POST data and List View Data
-#mixin.CreateModelMixin --> POST Method
-#mixin.UpdateModelMixin --> PUT Method
-#mixin.DestroyModelMixin --> DELETE Method
+    def delete(self,reuest,*args,**kwargs):
+        return self.destroy(reuest,*args,**kwargs)
 
-#Create and List View Mixin
+
+
 class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
-    permission_classes = []
-    authentication_classes = []
-    #queryset = Person.objects.all()
-    serializer_class = PersonSerializer
+    permission_classes      = []
+    authentication_classes  = []
+    serializer_class        = PersonSerializer
+
 
     def get_queryset(self):
+        request = self.request
         qs = Person.objects.all()
-        query = self.request.GET.get('q')
+        query = request.GET.get('q')
         if query is not None:
             qs = qs.filter(PersonName__icontains=query)
         return qs
@@ -37,24 +40,60 @@ class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
 
-    # def perform_create(self, serializer):
-    #     serializer.save(user = self.request.user)
+    # def perform_update(self, serializer):
+    #     pass
 
-#We dont need this Create API view method as this already covered in the mixin
-# class PersonCreateAPIView(generics.CreateAPIView):
+
+
+# class PersonListSearchAPIView(APIView):
+#     permission_classes = []
+#     authentication_classes = []
+#
+#     def get(self,request,format=None):
+#         qs = Person.objects.all()
+#         serializer = PersonSerializer(qs,many=True)
+#         return Response(serializer.data)
+#
+# #CreateModelMixin for Handling POST data and List View Data
+# #mixin.CreateModelMixin --> POST Method
+# #mixin.UpdateModelMixin --> PUT Method
+# #mixin.DestroyModelMixin --> DELETE Method
+#
+# #Create and List View Mixin
+# class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
+#     permission_classes = []
+#     authentication_classes = []
+#     #queryset = Person.objects.all()
+#     serializer_class = PersonSerializer
+#
+#     def get_queryset(self):
+#         qs = Person.objects.all()
+#         query = self.request.GET.get('q')
+#         if query is not None:
+#             qs = qs.filter(PersonName__icontains=query)
+#         return qs
+#
+#     def post(self,request,*args,**kwargs):
+#         return self.create(request,*args,**kwargs)
+#
+#     # def perform_create(self, serializer):
+#     #     serializer.save(user = self.request.user)
+#
+# #We dont need this Create API view method as this already covered in the mixin
+# # class PersonCreateAPIView(generics.CreateAPIView):
+# #     permission_classes =        []
+# #     authentication_classes =    []
+# #     queryset =                  Person.objects.all()
+# #     serializer_class =          PersonSerializer
+#
+# #There is simple way to define this method
+# class PersonDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 #     permission_classes =        []
 #     authentication_classes =    []
 #     queryset =                  Person.objects.all()
 #     serializer_class =          PersonSerializer
-
-#There is simple way to define this method
-class PersonDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes =        []
-    authentication_classes =    []
-    queryset =                  Person.objects.all()
-    serializer_class =          PersonSerializer
-    lookup_field =              'Pid'
-
+#     lookup_field =              'Pid'
+#
 
 #THis will be UpdateMix and Retrive View Mixin
 # class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.RetrieveAPIView):
