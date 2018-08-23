@@ -21,6 +21,7 @@ class PersonSerializer(serializers.ModelSerializer):
             'Person_BDate',
             'Person_CDate'
         ]
+        read_only_fields=['id'] # Get calls its gone be read only.
 
 
     def validate_personName(self,value):

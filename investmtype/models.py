@@ -11,7 +11,7 @@ import json
 class InvTypeQuerySet(models.QuerySet):
     def serialize(self):
         list_value = list(self.values_list('U_id','Invtype_id','InvestmentTypeName','InvestmentType_CDate'))
-        print list_value
+        print (list_value)
         return json.dumps(list_value,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
 
 class InvTypeManager(models.Manager):
@@ -21,7 +21,7 @@ class InvTypeManager(models.Manager):
 
 @python_2_unicode_compatible
 class InvestTypes(models.Model):
-    U_id = models.ForeignKey(settings.AUTH_USER_MODEL)
+    U_id = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     Invtype_id = models.AutoField(primary_key=True)
     InvestmentTypeName = models.CharField("Investment's Type", max_length=30,null=False)
     InvestmentType_CDate =  models.DateField(null=False,auto_now_add=True)

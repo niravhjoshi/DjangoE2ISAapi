@@ -8,8 +8,8 @@ from persons import models as personmodel
 # Create your models here.
 class SharesEntry(models.Model):
     Id = models.AutoField(primary_key=True)
-    U_id=models.ForeignKey(settings.AUTH_USER_MODEL)
-    P_id =models.ForeignKey(personmodel.Person)
+    U_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    P_id =models.ForeignKey(personmodel.Person,on_delete=models.CASCADE)
     Share_Per_Name = models.CharField("PersonName", max_length=30, null=False)
     Share_Tick_Name =models.CharField("ShareTickName",max_length=20)
     Share_Count = models.IntegerField("Share Count",null=False,blank=False)

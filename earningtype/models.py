@@ -10,7 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 class EarningTypeQuerySet(models.QuerySet):
     def serialize(self):
         list_values=list(self.values('User_id','EarnType_id','EarningTypeName'))
-        print list_values
+        print (list_values)
         return json.dumps(list_values,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
 
 
@@ -20,7 +20,7 @@ class EarningTypeManager(models.Manager):
 
 @python_2_unicode_compatible
 class EarningTypes(models.Model):
-    User_id = models.ForeignKey(settings.AUTH_USER_MODEL)
+    User_id = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     EarnType_id = models.AutoField(primary_key=True)
     EarningTypeName = models.CharField("Earning's Type", max_length=30,null=False)
     EarningType_CDate = models.DateField(null=False,auto_now_add=True)

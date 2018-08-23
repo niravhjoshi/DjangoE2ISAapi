@@ -8,8 +8,8 @@ from expensetype import models as exptypemodel
 # Create your models here.
 class ExpensesEntry(models.Model):
     Id = models.AutoField(primary_key=True)
-    U_id=models.ForeignKey(settings.AUTH_USER_MODEL)
-    P_id =models.ForeignKey(personmodel.Person)
+    U_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    P_id =models.ForeignKey(personmodel.Person,on_delete=models.CASCADE)
     Exp_Per_Name = models.CharField("PersonName", max_length=30, null=False)
     Exp_Type_Name = models.CharField("ExpType", max_length=30, null=False)
     Exp_Amt = models.FloatField(null=False,blank=False)

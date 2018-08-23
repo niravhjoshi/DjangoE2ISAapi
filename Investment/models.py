@@ -7,8 +7,8 @@ from investmtype import models as invtypemodel
 # Create your models here.
 class InvestmentsEntry(models.Model):
     Id = models.AutoField(primary_key=True)
-    U_id=models.ForeignKey(settings.AUTH_USER_MODEL)
-    P_id =models.ForeignKey(personmodel.Person)
+    U_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    P_id =models.ForeignKey(personmodel.Person,on_delete=models.CASCADE)
     Inv_Per_Name = models.CharField("PersonName", max_length=30, null=False)
     Inv_Type_Name = models.CharField("InvType", max_length=30, null=False)
     Inv_Init_Amt = models.FloatField("Init Amnt",null=False,blank=False)

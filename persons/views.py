@@ -22,8 +22,8 @@ class PersonSerializDetailView(View):
     def get(self,request,*args,**kwargs):
         pid = self.kwargs['puser_id']
         obj = Person.objects.get(Pid=pid,id_id=1)
-        print obj
+        print (obj)
         json_data = obj.serialize()
-        print json_data
+        print (json_data)
         return HttpResponse(json_data, content_type='application/json')
 

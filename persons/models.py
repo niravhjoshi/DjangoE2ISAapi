@@ -15,16 +15,16 @@ def upload_file(instance,filename):
 class PersonQuerySet(models.QuerySet):
     def serialize(self):
         list_values=list(self.values('id','Pid','PersonName','Person_Image','Person_sex','Person_BDate'))
-        print list_values
+        print (list_values)
         return json.dumps(list_values,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
 
 class PersonManager(models.Manager):
         def get_queryset(self):
             return PersonQuerySet(self.model,using=self._db)
 
-@python_2_unicode_compatible
+
 class Person(models.Model):
-    id = models.ForeignKey(settings.AUTH_USER_MODEL)
+    id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
     Pid = models.AutoField(primary_key=True)
     PersonName = models.CharField("person's first name", max_length=30,null=False)
     Person_Image = models.ImageField(upload_to=upload_file,null=True, blank=True)

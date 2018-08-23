@@ -11,7 +11,7 @@ import json
 class ExpenseTypeQuerySet(models.QuerySet):
     def serialize(self):
         list_value = list(self.values_list('U_id','ExpenseType_id','ExpenseTypeName','ExpenseType_CDate'))
-        print list_value
+        print (list_value)
         return json.dumps(list_value,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
 
 class ExpenseTypeManager(models.Manager):
@@ -20,7 +20,7 @@ class ExpenseTypeManager(models.Manager):
 
 @python_2_unicode_compatible
 class ExpenseType(models.Model):
-    U_id = models.ForeignKey(settings.AUTH_USER_MODEL)
+    U_id = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     ExpenseType_id = models.AutoField(primary_key=True)
     ExpenseTypeName = models.CharField("Expense's Type", max_length=30,null=False)
     ExpenseType_CDate =  models.DateField(null=False,auto_now_add=True)

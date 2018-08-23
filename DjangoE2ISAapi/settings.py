@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    #Django Project Apps
     'persons',
     'earningtype',
     'expensetype',
@@ -45,9 +46,32 @@ INSTALLED_APPS = [
     'Expenses',
     'Shares',
     'Investment',
+    #Django Third party
     'rest_framework',
+    'social_django',
+    #'allauth',
+    #'allauth.socialaccount.providers.google',
+    #'allauth.account',
+    #'allauth.socialaccount',
+
 
 ]
+#SITE_ID = 1
+# SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '33511635428-s6l2u5vicfqnd91c8sim6e1ktsdcgm3u.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'eqSfdnNgBLOr4OJzH9OXdGoo'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_FIELDS = ['email', 'username']  # optional
+LOGIN_REDIRECT_URL = 'home'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +81,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'django.middleware.common.CommonMiddleware',
+            ]
+
 
 ROOT_URLCONF = 'DjangoE2ISAapi.urls'
 
@@ -73,6 +99,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends', # this
+                'social_django.context_processors.login_redirect', # and this
             ],
         },
     },
@@ -134,3 +162,5 @@ STATIC_URL = '/static/'
 #File upload setting are here
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upd_files')
 MEDIA_PATH = '/media'
+
+from DjangoE2ISAapi.restconf.main import *

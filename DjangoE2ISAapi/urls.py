@@ -15,18 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from persons.views import PersonSerializDetailView,PersonSerializeListView
+from rest_framework_jwt.views import obtain_jwt_token,refresh_jwt_token,verify_jwt_token
+from .restconf import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/persons/',include('persons.api.urls')),
+    url(r'^',include('persons.api.urls'),name='home'),
+    #url(r'^api/persons/',include('persons.api.urls'),name='HOME'),
     url(r'^api/eartypes/',include('earningtype.api.urls')),
     url(r'^api/exptypes/',include('expensetype.api.urls')),
     url(r'^api/invtypes/',include('investmtype.api.urls')),
-
-#    url(r'^person/$', person_detail_view,),
-#    url(r'^person/cbv/$', JsonCBV.as_view(),),
-    #url(r'^person/PersonSerializDetailView/(?P<puser_id>\d+)/$', PersonSerializDetailView.as_view(),),
-    #url(r'^person/PersonSerializListView/$', PersonSerializeListView.as_view(),),
-#    url(r'^person/cbv2/$', JsonCBV2.as_view(),),
+    url(r'^api/auth/jwt/',obtain_jwt_token),
+    url(r'^api/auth/jwt/refresh',refresh_jwt_token),
+    url(r'^api/auth/jwt/verify',verify_jwt_token),
+    url(r'^new',views.index),
+    url(r'^oauth/', include('social_django.urls', namespace='social'))
 ]

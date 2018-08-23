@@ -7,8 +7,8 @@ from earningtype import models as eartypemodel
 # Create your models here.
 class EarningsEntry(models.Model):
     Id = models.AutoField(primary_key=True)
-    U_id=models.ForeignKey(settings.AUTH_USER_MODEL)
-    P_id =models.ForeignKey(personmodel.Person)
+    U_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    P_id =models.ForeignKey(personmodel.Person,on_delete=models.CASCADE)
     Ear_Per_Name = models.CharField("PersonName",max_length=30,null=False)
     Ear_Type_Name =models.CharField("EarninType",max_length=30,null=False)
     Ear_Amt = models.FloatField(null=False,blank=False)

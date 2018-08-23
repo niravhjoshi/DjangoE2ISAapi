@@ -1,13 +1,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics,mixins
+from rest_framework import generics,mixins,permissions
 from .serializers import PersonSerializer
 from persons.models import Person
 from django.views.generic import View
+from rest_framework.authentication import SessionAuthentication
+
 
 class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.RetrieveAPIView):
-    permission_classes      = []
-    authentication_classes  = []
+    #permission_classes      = []
+    #authentication_classes  = [SessionAuthentication]
     queryset                = Person.objects.all()
     serializer_class        = PersonSerializer
     lookup_field            = 'Pid'
@@ -24,13 +26,14 @@ class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,gener
 
 
 class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
-    permission_classes      = []
-    authentication_classes  = []
+    #permission_classes      = [permissions.IsAuthenticatedOrReadOnly]
+    #authentication_classes  = [SessionAuthentication] #Oauth and #JWT
     serializer_class        = PersonSerializer
 
 
     def get_queryset(self):
         request = self.request
+        #print (request.user)
         qs = Person.objects.all()
         query = request.GET.get('q')
         if query is not None:
@@ -40,6 +43,8 @@ class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
 
+    def perform_create(self, serializer):
+        serializer.save(id=self.request.user)
     # def perform_update(self, serializer):
     #     pass
 
