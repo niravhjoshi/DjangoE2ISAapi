@@ -20,8 +20,8 @@ from .restconf import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^',include('persons.api.urls'),name='home'),
-    #url(r'^api/persons/',include('persons.api.urls'),name='HOME'),
+    #url(r'^',include('persons.api.urls'),name='home'),
+    url(r'^api/persons/',include('persons.api.urls'),name='HOME'),
     url(r'^api/eartypes/',include('earningtype.api.urls')),
     url(r'^api/exptypes/',include('expensetype.api.urls')),
     url(r'^api/invtypes/',include('investmtype.api.urls')),
@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^api/auth/jwt/refresh',refresh_jwt_token),
     url(r'^api/auth/jwt/verify',verify_jwt_token),
     url(r'^new',views.index),
-    url(r'^oauth/', include('social_django.urls', namespace='social'))
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^accounts/', include('allauth.urls')),
 ]

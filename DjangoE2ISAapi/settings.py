@@ -48,29 +48,38 @@ INSTALLED_APPS = [
     'Investment',
     #Django Third party
     'rest_framework',
-    'social_django',
-    #'allauth',
-    #'allauth.socialaccount.providers.google',
-    #'allauth.account',
-    #'allauth.socialaccount',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    #'social_django',
 
 
 ]
+SOCIALACCOUNT_PROVIDERS = { 'google':
+                             { 'SCOPE': ['email'],
+                               'AUTH_PARAMS': { 'access_type': 'offline' }
+                             }
+                          }
 #SITE_ID = 1
 # SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 # SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '33511635428-s6l2u5vicfqnd91c8sim6e1ktsdcgm3u.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'eqSfdnNgBLOr4OJzH9OXdGoo'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_FIELDS = ['email', 'username']  # optional
-LOGIN_REDIRECT_URL = 'home'
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'access_type': 'offline', 'approval_prompt': 'auto'}
+SOCIAL_AUTH_GOOGLE_OAUTH2_FIELDS = ['email', 'username']  # optional
+
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_QUERY_EMAIL = True
+LOGIN_REDIRECT_URL = "/"
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
-
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 MIDDLEWARE = [
@@ -83,9 +92,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.CommonMiddleware',
             ]
-
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'path.to.redirect_if_no_refresh_token',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
 
 ROOT_URLCONF = 'DjangoE2ISAapi.urls'
+SITE_ID = 1
 
 TEMPLATES = [
     {
@@ -99,8 +120,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends', # this
-                'social_django.context_processors.login_redirect', # and this
+               # 'social_django.context_processors.backends', # this
+                #'social_django.context_processors.login_redirect', # and this
+
             ],
         },
     },
