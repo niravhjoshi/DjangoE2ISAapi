@@ -50,3 +50,6 @@ class Person(models.Model):
         data = json.dumps(data,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
         return data
 
+    @property
+    def owner(self):
+        return self.id

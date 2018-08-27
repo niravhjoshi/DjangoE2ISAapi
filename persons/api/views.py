@@ -4,11 +4,12 @@ from rest_framework import generics,mixins,permissions
 from .serializers import PersonSerializer
 from persons.models import Person
 from django.views.generic import View
+from django.shortcuts import get_object_or_404
 from rest_framework.authentication import SessionAuthentication
-
+from accounts.api.permissions import IsOwnerOnly
 
 class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.RetrieveAPIView):
-    #permission_classes      = []
+    permission_classes      = [IsOwnerOnly]
     #authentication_classes  = [SessionAuthentication]
     queryset                = Person.objects.all()
     serializer_class        = PersonSerializer
@@ -26,15 +27,17 @@ class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,gener
 
 
 class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
-    #permission_classes      = [permissions.IsAuthenticatedOrReadOnly]
-    #authentication_classes  = [SessionAuthentication] #Oauth and #JWT
+    permission_classes      = [IsOwnerOnly]
     serializer_class        = PersonSerializer
-
-
+    #
+    # def get_object(self):
+    #     obj = get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])
+    #     self.check_object_permissions(self.request, obj)
+    #     return obj
     def get_queryset(self):
         request = self.request
         #print (request.user)
-        qs = Person.objects.all()
+        qs = Person.objects.filter(id=self.request.user)
         query = request.GET.get('q')
         if query is not None:
             qs = qs.filter(PersonName__icontains=query)

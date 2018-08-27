@@ -25,10 +25,6 @@ urlpatterns = [
     url(r'^api/eartypes/',include('earningtype.api.urls')),
     url(r'^api/exptypes/',include('expensetype.api.urls')),
     url(r'^api/invtypes/',include('investmtype.api.urls')),
-    url(r'^api/auth/jwt/',obtain_jwt_token),
-    url(r'^api/auth/jwt/refresh',refresh_jwt_token),
-    url(r'^api/auth/jwt/verify',verify_jwt_token),
-    url(r'^new',views.index),
-    url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^accounts/', include('allauth.urls')),
+    url(r'^api/auth/',include('accounts.api.urls')),
+
 ]
