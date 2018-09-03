@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
@@ -19,7 +18,7 @@ class InvTypeManager(models.Manager):
         return InvTypeQuerySet(self.model,using=self._db)
 
 
-@python_2_unicode_compatible
+
 class InvestTypes(models.Model):
     U_id = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     Invtype_id = models.AutoField(primary_key=True)
@@ -37,3 +36,7 @@ class InvestTypes(models.Model):
         }
         data = json.dumps(data, sort_keys=True, indent=1, cls=DjangoJSONEncoder)
         return data
+
+    @property
+    def owner(self):
+        return self.U_id

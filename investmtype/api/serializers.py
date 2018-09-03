@@ -11,7 +11,7 @@ class InvTypeSerializer(serializers.ModelSerializer):
             'InvestmentTypeName',
             'InvestmentType_CDate'
         ]
-
+        read_only_fields = ['U_id']
 
     def validate_invtype(self,value):
         if len(value) > 30:

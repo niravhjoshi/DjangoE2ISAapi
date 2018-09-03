@@ -11,7 +11,7 @@ class EarningTypeSerializer(serializers.ModelSerializer):
             'EarningTypeName',
             'EarningType_CDate'
         ]
-
+        read_only_fields = ['User_id']
 
     def validate_earningtype(self,value):
         if len(value) > 30:

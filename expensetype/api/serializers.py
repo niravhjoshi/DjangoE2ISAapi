@@ -12,6 +12,8 @@ class ExpenseTypeSerializer(serializers.ModelSerializer):
             'ExpenseType_CDate'
         ]
 
+        read_only_fields = ['U_id']
+
 
     def validate_expensetype(self,value):
         if len(value) > 30:
