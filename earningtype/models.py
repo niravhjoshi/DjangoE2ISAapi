@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from django.conf import settings
 from django.db import models
 import json
@@ -18,7 +18,7 @@ class EarningTypeManager(models.Manager):
         def get_queryset(self):
             return EarningTypeQuerySet(self.model,using=self._db)
 
-@python_2_unicode_compatible
+
 class EarningTypes(models.Model):
     User_id = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     EarnType_id = models.AutoField(primary_key=True)
@@ -27,7 +27,7 @@ class EarningTypes(models.Model):
     objects = EarningTypeManager()
 
     def __str__(self):
-        return str(self.User_id)+str(self.EarnType_id)+str(self.EarningTypeName) or ""
+        return str(self.User_id)+'_____'+str(self.EarnType_id) or ""
 
     def serialize(self):
         data = {

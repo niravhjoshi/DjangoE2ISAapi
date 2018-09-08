@@ -26,5 +26,10 @@ urlpatterns = [
     url(r'^api/exptypes/',include('expensetype.api.urls')),
     url(r'^api/invtypes/',include('investmtype.api.urls')),
     url(r'^api/auth/',include('accounts.api.urls')),
+    url(r'^api/Earnings/',include('Earnings.api.urls')),
+    # url(r'^api/Expenses/',include('Expenses.api.urls')),
+    # url(r'^api/Investments/',include('Investment.api.urls')),
+    # url(r'^api/Shares/',include('Shares.api.urls')),
+
 
 ]

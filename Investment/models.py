@@ -9,28 +9,17 @@ class InvestmentsEntry(models.Model):
     Id = models.AutoField(primary_key=True)
     U_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     P_id =models.ForeignKey(personmodel.Person,on_delete=models.CASCADE)
-    Inv_Per_Name = models.CharField("PersonName", max_length=30, null=False)
-    Inv_Type_Name = models.CharField("InvType", max_length=30, null=False)
+    InvestType_id =models.ForeignKey(invtypemodel.InvestTypes,on_delete=models.CASCADE)
     Inv_Init_Amt = models.FloatField("Init Amnt",null=False,blank=False)
     Inv_Mat_Amt = models.FloatField("Mature Amnt",null=False,blank=False)
     Inv_ROI_PerYear = models.FloatField("ROI in Percentage",null=False,blank=False)
     Inv_Date = models.DateField("Inv Date",null=False,blank=False)
     Inv_Mat_Date = models.DateField("Inv Mat Date",null=False,blank=False)
     Inv_Due_Date = models.DateField("Inv Due Date",null=False,blank=False)
-    Inv_Img = models.BinaryField(null=True)
-    Inv_FileName =models.CharField("FileName",max_length=300,null=True)
+    Inv_Img = models.ImageField(null=True,blank=True)
     Inv_comm = models.TextField()
 
     def __str__(self):
-        return self.Id, \
-               self.U_id,\
-               self.P_id ,\
-               self.Inv_Per_Name,\
-               self.Inv_Type_Name,\
-               self.Inv_Init_Amt,\
-               self.Inv_Mat_Amt,\
-               self.Inv_Date,\
-               self.Inv_Mat_Date,\
-               self.Inv_Due_Date,\
-               self.Inv_FileName,\
-               self.Inv_comm or ""
+        return str(self.U_id) + str(self.P_id) + str(self.InvestType_id) + str(self.Inv_Init_Amt) +str(self.Inv_Mat_Amt)+ \
+               str(self.Inv_ROI_PerYear) + str(self.Inv_Date) + str(self.Inv_Mat_Date) + str(self.Inv_Due_Date)+ \
+               str(self.Inv_Img) + str(self.Inv_comm) or ""

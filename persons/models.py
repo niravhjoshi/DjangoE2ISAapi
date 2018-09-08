@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.core.serializers import serialize
 from django.db import models
 from django.conf import settings
 import json
-from django.utils.encoding import python_2_unicode_compatible
 from django.core.serializers.json import DjangoJSONEncoder
 # Create your models here.
 

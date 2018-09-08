@@ -2,15 +2,19 @@ import datetime
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-                'rest_framework.authentication.SessionAuthentication',
-                'allauth.account.auth_backends.AuthenticationBackend',
-                # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-                #'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'allauth.account.auth_backends.AuthenticationBackend',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
 
-    'DEFAULT_PERMISSION_CLASSES':(
-   'rest_framework.permissions.IsAuthenticated',
-    )
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+'DEFAULT_FILTER_BACKENDS': (
+        #'rest_framework_filters.backends.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+         ),
 }
 #
 # JWT_AUTH = {
