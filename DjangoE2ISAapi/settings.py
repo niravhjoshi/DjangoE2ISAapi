@@ -59,10 +59,10 @@ INSTALLED_APPS = [
 ]
 
 SOCIAL_AUTH_PIPELINE = (
-    'social_auth.backends.pipeline.social.social_auth_user',
-    'social_auth.backends.pipeline.social.associate_user',
-    'social_auth.backends.pipeline.social.load_extra_data',
-    'social_auth.backends.pipeline.user.update_user_details'
+#    'social_auth.backends.pipeline.social.social_auth_user',
+#    'social_auth.backends.pipeline.social.associate_user',
+#    'social_auth.backends.pipeline.social.load_extra_data',
+#    'social_auth.backends.pipeline.user.update_user_details'
 )
 
 ACCOUNT_USERNAME_REQUIRED = False
@@ -71,12 +71,24 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 LOGIN_REDIRECT_URL = "/api/persons"
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
+#    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-    'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth',
+ #   'social_core.backends.google.GoogleOpenId',
+ #   'social_core.backends.google.GoogleOAuth',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
