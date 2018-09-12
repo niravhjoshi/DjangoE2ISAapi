@@ -13,15 +13,15 @@ class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = [
-            'id',
-            'Pid',
+            'UserName',
+            'PersonId',
             'PersonName',
             'Person_Image',
             'Person_sex',
             'Person_BDate',
             'Person_CDate'
         ]
-        read_only_fields=['id'] # Get calls its gone be read only.
+        read_only_fields=['UserName'] # Get calls its gone be read only.
 
 
     def validate_personName(self,value):

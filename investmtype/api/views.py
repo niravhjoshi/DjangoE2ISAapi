@@ -32,7 +32,7 @@ class InvTypeAPIView(mixins.CreateModelMixin,generics.ListAPIView):
 
     def get_queryset(self):
         request = self.request
-        qs = InvestTypes.objects.filter(U_id=self.request.user)
+        qs = InvestTypes.objects.filter(UserName=self.request.user)
         query = request.GET.get('q')
         if query is not None:
             qs = qs.filter(InvestmentTypeName__icontains=query)
@@ -43,4 +43,4 @@ class InvTypeAPIView(mixins.CreateModelMixin,generics.ListAPIView):
         return self.create(request,*args,**kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(U_id=self.request.user)
+        serializer.save(UserName=self.request.user)

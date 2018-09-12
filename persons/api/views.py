@@ -13,7 +13,7 @@ class PersonDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,gener
     #authentication_classes  = [SessionAuthentication]
     queryset                = Person.objects.all()
     serializer_class        = PersonSerializer
-    lookup_field            = 'Pid'
+    lookup_field            = 'PersonId'
 
     def put(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
@@ -37,7 +37,7 @@ class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
     def get_queryset(self):
         request = self.request
         #print (request.user)
-        qs = Person.objects.filter(id=self.request.user)
+        qs = Person.objects.filter(UserName=self.request.user)
         query = request.GET.get('q')
         if query is not None:
             qs = qs.filter(PersonName__icontains=query)
@@ -47,7 +47,7 @@ class PersonAPIView(mixins.CreateModelMixin,generics.ListAPIView):
         return self.create(request,*args,**kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(id=self.request.user)
+        serializer.save(UserName=self.request.user)
     # def perform_update(self, serializer):
     #     pass
 

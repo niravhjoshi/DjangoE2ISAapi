@@ -32,7 +32,7 @@ class EarningTypeAPIView(mixins.CreateModelMixin,generics.ListAPIView):
 
     def get_queryset(self):
         request = self.request
-        qs = EarningTypes.objects.filter(User_id=request.user)
+        qs = EarningTypes.objects.filter(UserName=request.user)
         query = request.GET.get('q')
         if query is not None:
             qs = qs.filter(EarningTypeName__icontains=query)
@@ -42,4 +42,4 @@ class EarningTypeAPIView(mixins.CreateModelMixin,generics.ListAPIView):
         return self.create(request,*args,**kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(User_id=self.request.user)
+        serializer.save(UserName=self.request.user)

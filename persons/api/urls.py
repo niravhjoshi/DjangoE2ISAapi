@@ -5,7 +5,7 @@ from .views import  PersonAPIView,PersonDetailAPIView
 urlpatterns = [
     #url(r'^$',PersonListSearchAPIView.as_view()),
     url(r'^$',PersonAPIView.as_view()),
-    url(r'^(?P<Pid>\d+)/$',PersonDetailAPIView.as_view()),
+    url(r'^(?P<PersonId>\d+)/$',PersonDetailAPIView.as_view()),
     #url(r'^create/$',PersonCreateAPIView.as_view()),
     #url(r'^(?P<Pid>\d+)/$',PersonDetailAPIView.as_view()),
     #url(r'^(?P<Pid>\d+)/update/$',PersonUpdateAPIView.as_view()),

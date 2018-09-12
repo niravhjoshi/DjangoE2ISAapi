@@ -7,9 +7,9 @@ from persons import models as personmodel
 
 # Create your models here.
 class SharesEntry(models.Model):
-    Id = models.AutoField(primary_key=True)
-    U_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    P_id =models.ForeignKey(personmodel.Person,on_delete=models.CASCADE)
+    SharesID = models.AutoField(primary_key=True)
+    UserName=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    PersonName=models.ForeignKey(personmodel.Person,on_delete=models.CASCADE)
     Share_Tick_Name =models.CharField("ShareTickName",max_length=20)
     Share_Count = models.IntegerField("Share Count",null=False,blank=False)
     sellTran =(('Sell','S'),('Buy','B'),)
@@ -20,6 +20,6 @@ class SharesEntry(models.Model):
     Share_comm = models.TextField(null=True,blank=True)
 
     def __str__(self):
-        return str(self.U_id) + str(self.P_id) + str(self.Share_Tick_Name) + str(self.Share_Count) +str(self.sellTran)+ \
+        return str(self.UserName) + str(self.PersonName) + str(self.Share_Tick_Name) + str(self.Share_Count) +str(self.sellTran)+ \
                str(self.Share_Tran_Type) + str(self.Share_pershare_amt) + str(self.Share_Buy_Sell_Date) + str(self.Share_img)+ \
                str(self.Share_comm)  or ""

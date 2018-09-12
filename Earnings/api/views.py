@@ -11,7 +11,7 @@ class EarningEntryDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin
     #authentication_classes  = [SessionAuthentication]
     queryset                = EarningsEntry.objects.all()
     serializer_class        = EarningsSerializer
-    lookup_field            = 'Id'
+    lookup_field            = 'EarningsId'
 
     def put(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
@@ -31,8 +31,7 @@ class EarningEntryAPIView(mixins.CreateModelMixin,generics.ListAPIView):
     def get_queryset(self):
         request = self.request
         #print (request.user)
-        qs = EarningsEntry.objects.filter(P_id__earningsentry__U_id_id=self.request.user)
-        filter_backends = (DjangoFilterBackend,)
+        qs = EarningsEntry.objects.filter(UserName=self.request.user)
         query = request.GET.get('q')
         if query is not None:
             qs = qs.filter(Earning_Type_id__EarningTypeName__contains=query)
@@ -42,4 +41,4 @@ class EarningEntryAPIView(mixins.CreateModelMixin,generics.ListAPIView):
         return self.create(request,*args,**kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(id=self.request.user)
+        serializer.save(UserName=self.request.user)

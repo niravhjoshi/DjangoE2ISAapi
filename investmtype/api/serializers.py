@@ -6,12 +6,12 @@ class InvTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = InvestTypes
         fields = [
-            'U_id',
+            'UserName',
             'Invtype_id',
             'InvestmentTypeName',
             'InvestmentType_CDate'
         ]
-        read_only_fields = ['U_id']
+        read_only_fields = ['UserName']
 
     def validate_invtype(self,value):
         if len(value) > 30:

@@ -6,12 +6,12 @@ class EarningTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EarningTypes
         fields = [
-            'User_id',
+            'UserName',
             'EarnType_id',
             'EarningTypeName',
             'EarningType_CDate'
         ]
-        read_only_fields = ['User_id']
+        read_only_fields = ['UserName']
 
     def validate_earningtype(self,value):
         if len(value) > 30:

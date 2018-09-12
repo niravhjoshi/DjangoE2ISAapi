@@ -32,7 +32,7 @@ class ExpenseTypeAPIView(mixins.CreateModelMixin,generics.ListAPIView):
 
     def get_queryset(self):
         request = self.request
-        qs = ExpenseType.objects.filter(U_id=request.user)
+        qs = ExpenseType.objects.filter(UserName=request.user)
         query = request.GET.get('q')
         if query is not None:
             qs = qs.filter(ExpenseTypeName__icontains=query)
@@ -42,4 +42,4 @@ class ExpenseTypeAPIView(mixins.CreateModelMixin,generics.ListAPIView):
         return self.create(request,*args,**kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(U_id=self.request.user)
+        serializer.save(UserName=self.request.user)

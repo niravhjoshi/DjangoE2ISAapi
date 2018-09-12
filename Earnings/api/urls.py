@@ -4,5 +4,5 @@ from .views import  EarningEntryAPIView,EarningEntryDetailAPIView
 
 urlpatterns = [
     url(r'^$',EarningEntryAPIView.as_view()),
-    url(r'^(?P<Id>\d+)/$',EarningEntryDetailAPIView.as_view()),
+    url(r'^(?P<EarningsId>\d+)/$',EarningEntryDetailAPIView.as_view()),
    ]

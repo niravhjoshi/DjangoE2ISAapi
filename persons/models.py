@@ -7,12 +7,12 @@ from django.core.serializers.json import DjangoJSONEncoder
 # Create your models here.
 
 def upload_file(instance,filename):
-    return "persons/{user}/{filename}".format(user=instance.id,filename=filename)
+    return "persons/{user}/{filename}".format(user=instance.UserName,filename=filename)
 
 
 class PersonQuerySet(models.QuerySet):
     def serialize(self):
-        list_values=list(self.values('id','Pid','PersonName','Person_Image','Person_sex','Person_BDate'))
+        list_values=list(self.values('UserName','PersonId','PersonName','Person_Image','Person_sex','Person_BDate'))
         print (list_values)
         return json.dumps(list_values,sort_keys=True,indent=1,cls=DjangoJSONEncoder)
 
@@ -22,8 +22,8 @@ class PersonManager(models.Manager):
 
 
 class Person(models.Model):
-    id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
-    Pid = models.AutoField(primary_key=True)
+    UserName = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    PersonId = models.AutoField(primary_key=True)
     PersonName = models.CharField("person's first name", max_length=30,null=False)
     Person_Image = models.ImageField(upload_to=upload_file,null=True, blank=True)
     SEX = (('M','Male'),('F','Female'), ('N','None'), )
@@ -34,12 +34,12 @@ class Person(models.Model):
 
 
     def __str__(self):
-        return str(self.PersonName)+str(self.Person_Image)+str(self.Pid)+str(self.SEX)+str(self.Person_BDate)+str(self.id_id) or ""
+        return str(self.PersonName) or ""
 
     def serialize(self):
         data={
-            'id': self.id_id,
-            'Pid': self.Pid,
+            'UserName': self.UserName,
+            'PersonId': self.PersonId,
             'PersonName': self.PersonName,
             'Person_Image':self.Person_Image,
             'Person_sex': self.Person_sex,
@@ -50,4 +50,4 @@ class Person(models.Model):
 
     @property
     def owner(self):
-        return self.id
+        return self.UserName
