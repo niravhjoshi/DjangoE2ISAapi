@@ -71,10 +71,7 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 LOGIN_REDIRECT_URL = "/api/persons"
 
 AUTHENTICATION_BACKENDS = (
-#    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
- #   'social_core.backends.google.GoogleOpenId',
- #   'social_core.backends.google.GoogleOAuth',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 

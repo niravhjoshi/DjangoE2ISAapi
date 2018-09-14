@@ -19,8 +19,8 @@ class EarningEntryDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin
     def patch(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
 
-    def delete(self,reuest,*args,**kwargs):
-        return self.destroy(reuest,*args,**kwargs)
+    def delete(self,request,*args,**kwargs):
+        return self.destroy(request,*args,**kwargs)
 
 
 
@@ -34,7 +34,7 @@ class EarningEntryAPIView(mixins.CreateModelMixin,generics.ListAPIView):
         qs = EarningsEntry.objects.filter(UserName=self.request.user)
         query = request.GET.get('q')
         if query is not None:
-            qs = qs.filter(Earning_Type_id__EarningTypeName__contains=query)
+            qs = qs.filter(Earning_Type_Name__EarningTypeName__contains=query)
         return qs
 
     def post(self,request,*args,**kwargs):

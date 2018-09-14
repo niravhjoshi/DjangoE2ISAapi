@@ -3,8 +3,6 @@ import datetime
 from Earnings.models import EarningsEntry
 from persons.models import Person
 from earningtype.models import EarningTypes
-from django.contrib.auth import get_user_model
-
 
 
 class EarningsSerializer(serializers.ModelSerializer):
