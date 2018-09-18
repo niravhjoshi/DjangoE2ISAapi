@@ -8,7 +8,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 
 def upload_file(instance, filename):
-    return "expenses/{user}/{filename}".format(user=instance.UserName, filename=filename)
+    return "expensesentry/{user}/{filename}".format(user=instance.UserName, filename=filename)
 
 
 class ExpensesQuerySet(models.QuerySet):
@@ -59,4 +59,4 @@ class ExpensesEntry(models.Model):
 
     @property
     def owner(self):
-        return self.ExpensesId
+        return self.UserName

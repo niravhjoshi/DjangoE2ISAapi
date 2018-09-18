@@ -56,4 +56,4 @@ class EarningsEntry(models.Model):
 
     @property
     def owner(self):
-        return self.EarningsId
+        return self.UserName

@@ -6,13 +6,13 @@ class ExpenseTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExpenseType
         fields = [
-            'U_id',
+            'UserName',
             'ExpenseType_id',
             'ExpenseTypeName',
             'ExpenseType_CDate'
         ]
 
-        read_only_fields = ['U_id']
+        read_only_fields = ['UserName']
 
 
     def validate_expensetype(self,value):

@@ -8,7 +8,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 class ExpenseEntryDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.RetrieveAPIView):
     permission_classes      = [IsOwnerOnly]
-    #authentication_classes  = [SessionAuthentication]
     queryset                = ExpensesEntry.objects.all()
     serializer_class        = ExpensesSerializer
     lookup_field            = 'ExpensesId'

@@ -12,9 +12,7 @@ class IsOwnerOnly(permissions.BasePermission):
          else:
              return False
 
-    def filter_queryset(self, request, queryset, view):
-         return queryset.filter(owner=request.user)
-#
+
 #  class IsOwnerFilterBackend(filters.BaseFilterBackend):
 #     """
 #     Filter that only allows users to see their own objects.

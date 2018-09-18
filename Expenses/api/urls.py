@@ -4,5 +4,5 @@ from .views import  ExpenseEntryDetailAPIView,ExpenseEntryAPIView
 
 urlpatterns = [
     url(r'^$',ExpenseEntryAPIView.as_view()),
-    url(r'^(?P<ExpensesID>\d+)/$',ExpenseEntryDetailAPIView.as_view()),
+    url(r'^(?P<ExpensesId>\d+)/$',ExpenseEntryDetailAPIView.as_view()),
    ]

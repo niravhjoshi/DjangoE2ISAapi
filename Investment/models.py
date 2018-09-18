@@ -75,4 +75,4 @@ class InvestmentsEntry(models.Model):
 
     @property
     def owner(self):
-        return self.InvestmentId
+        return self.UserName

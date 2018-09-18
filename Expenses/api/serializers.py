@@ -22,15 +22,10 @@ class ExpensesSerializer(serializers.ModelSerializer):
             'Exp_Img',
             'Exp_date',
             'Exp_comm'
-
         ]
         read_only_fields=['UserName'] # Get calls its gone be read only.
 
 
-    # def validate_Ear_Amt(self,value):
-    #     if len(value) > 20:
-    #         raise serializers.ValidationError("Earning amount is way high 20 Char")
-    #     return value
     def validate_exp_date(self, value):
         if datetime.datetime.strptime(value, '%Y-%m-%d'):
             raise serializers.ValidationError("Incorrect data format, should be YYYY-MM-DD")
