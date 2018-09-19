@@ -3,7 +3,9 @@ from rest_framework import generics,mixins,permissions
 from .serializers import EarningsSerializer
 from Earnings.models import EarningsEntry
 from accounts.api.permissions import IsOwnerOnly
-from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 
 
 class EarningEntryDetailAPIView(mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.RetrieveAPIView):
@@ -31,11 +33,15 @@ class EarningEntryAPIView(mixins.CreateModelMixin,generics.ListAPIView):
     def get_queryset(self):
         request = self.request
         #print (request.user)
-        qs = EarningsEntry.objects.filter(UserName=self.request.user)
-        query = request.GET.get('q')
-        if query is not None:
-            qs = qs.filter(Earning_Type_Name__EarningTypeName__contains=query)
-        return qs
+        if request.user.is_authenticated():
+            qs = EarningsEntry.objects.filter(UserName=self.request.user)
+            query = request.GET.get('q')
+            if query is not None:
+                qs = qs.filter(Earning_Type_Name__EarningTypeName__contains=query)
+            return qs
+        else:
+            #raise PermissionDenied
+            return JsonResponse({'Error': 'You have not logged in please login to access this page.'})
 
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)

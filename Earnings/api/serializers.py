@@ -3,14 +3,20 @@ import datetime
 from Earnings.models import EarningsEntry
 from persons.models import Person
 from earningtype.models import EarningTypes
-
+from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 
 class EarningsSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(EarningsSerializer, self).__init__(*args, **kwargs)
-        request_user = self.context['request'].user
-        self.fields['PersonName'].queryset = Person.objects.filter(UserName=request_user)
-        self.fields['Earning_Type_Name'].queryset = EarningTypes.objects.filter(UserName=request_user)
+        if self.context['request'].user.is_authenticated():
+            request_user = self.context['request'].user
+            self.fields['PersonName'].queryset = Person.objects.filter(UserName=request_user)
+            self.fields['Earning_Type_Name'].queryset = EarningTypes.objects.filter(UserName=request_user)
+        else:
+            raise PermissionDenied
+
+
     class Meta:
         model = EarningsEntry
         fields = [
