@@ -1,6 +1,7 @@
 from rest_framework import serializers
 import datetime
 from persons.models import Person
+from accounts.api.serializers import UserPublicSerializer
 
 '''
 #Serializers can convert ---> Json
@@ -10,9 +11,12 @@ from persons.models import Person
 #    text_field = serializers.CharField()
 
 class PersonSerializer(serializers.ModelSerializer):
+    uri      = serializers.SerializerMethodField(read_only=True)
+    UserName = UserPublicSerializer(read_only=True)
     class Meta:
         model = Person
         fields = [
+            'uri',
             'UserName',
             'PersonId',
             'PersonName',
@@ -23,6 +27,8 @@ class PersonSerializer(serializers.ModelSerializer):
         ]
         read_only_fields=['UserName'] # Get calls its gone be read only.
 
+    def get_uri(self,obj):
+        return "/api/Persons/{id}".format(id=obj.PersonId)
 
     def validate_personName(self,value):
         if len(value) > 30:
