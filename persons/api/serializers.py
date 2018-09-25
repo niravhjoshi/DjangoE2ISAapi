@@ -2,15 +2,12 @@ from rest_framework import serializers
 import datetime
 from persons.models import Person
 from accounts.api.serializers import UserPublicSerializer
+from django.core.exceptions import PermissionDenied
 
-'''
-#Serializers can convert ---> Json
-#Serializers can validate data
-'''
-#class PersonCustomSerilizer(serializers.Serializer):
-#    text_field = serializers.CharField()
+
 
 class PersonSerializer(serializers.ModelSerializer):
+
     uri      = serializers.SerializerMethodField(read_only=True)
     UserName = UserPublicSerializer(read_only=True)
     class Meta:
